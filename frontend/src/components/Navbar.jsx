@@ -1,8 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ArgentBankLogo from "../assets/argentBankLogo.png";
+import Logged from "./Logged";
+import Unlogged from "./Unlogged";
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
     <nav className="main-nav">
       <Link to="/" className="main-nav-logo">
@@ -13,12 +17,7 @@ const Navbar = () => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      <div>
-        <Link to="/login" className="main-nav-item">
-          <i className="fa fa-user-circle"></i>
-          Sign In
-        </Link>
-      </div>
+      {location.pathname === "/profile" ? <Logged /> : <Unlogged />}
     </nav>
   );
 };
