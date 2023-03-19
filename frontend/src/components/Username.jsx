@@ -1,12 +1,12 @@
 import React from "react";
 
-const Username = () => {
+const Username = ({ firstName, lastName }) => {
   return (
     <div className="header">
       <h1>
         Welcome back
         <br />
-        Tony Jarvis!
+        {firstName} {lastName}!
       </h1>
       <button className="edit-button">Edit Name</button>
     </div>

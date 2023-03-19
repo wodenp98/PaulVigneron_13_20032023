@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Logged = () => {
+const Logged = ({ firstName }) => {
   return (
     <div>
-      <Link to="/" className="main-nav-item">
+      <div className="main-nav-item">
         <i className="fa fa-user-circle"></i>
-        Tony
-      </Link>
+        {firstName}
+      </div>
       <Link to="/" className="main-nav-item">
         <i className="fa fa-sign-out"></i>
         Sign Out
