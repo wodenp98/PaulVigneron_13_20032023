@@ -1,12 +1,19 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import ArgentBankLogo from "../assets/argentBankLogo.png";
 import Logged from "./Logged";
 import Unlogged from "./Unlogged";
 
-const Navbar = ({ firstName, isLogged }) => {
-  const location = useLocation();
-  console.log(isLogged);
+const Navbar = ({ firstName }) => {
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLogged(true);
+    }
+  }, []);
+
   return (
     <nav className="main-nav">
       <Link to="/" className="main-nav-logo">
@@ -17,12 +24,7 @@ const Navbar = ({ firstName, isLogged }) => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      {/* state isLogged? */}
-      {location.pathname === "/profile" ? (
-        <Logged firstName={firstName} />
-      ) : (
-        <Unlogged />
-      )}
+      {!isLogged ? <Unlogged /> : <Logged firstName={firstName} />}
     </nav>
   );
 };

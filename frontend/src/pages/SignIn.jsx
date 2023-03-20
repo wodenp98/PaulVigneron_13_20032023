@@ -6,7 +6,6 @@ import Navbar from "../components/Navbar";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogged, setIsLogged] = useState(false);
   let navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -18,7 +17,6 @@ const SignIn = () => {
       );
       console.log(response);
       localStorage.setItem("token", response.data.body.token);
-      setIsLogged(true);
       navigate("/profile");
     } catch (error) {
       console.error(error);
@@ -27,7 +25,7 @@ const SignIn = () => {
 
   return (
     <>
-      <Navbar isLogged={isLogged} />
+      <Navbar />
       <main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>

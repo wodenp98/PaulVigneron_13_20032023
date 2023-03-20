@@ -21,9 +21,8 @@ const Profile = () => {
             },
           }
         );
-        console.log(response);
-        // setName()
-        // setFirstName
+        setLastName(response.data.body.lastName);
+        setFirstName(response.data.body.firstName);
       } catch (error) {
         console.error(error);
       }
