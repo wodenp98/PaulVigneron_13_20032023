@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile";
 import Footer from "./components/Footer";
+import PrivateRoutes from "./utils/PrivateRoutes";
 import "./main.css";
 
 function App() {
@@ -12,8 +13,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<SignIn />} />
-          {/* pas accessible par url */}
-          <Route path="/profile" element={<Profile />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
         <Footer />
       </Router>
