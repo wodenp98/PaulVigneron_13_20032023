@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ArgentBankLogo from "../assets/argentBankLogo.png";
 import Logged from "./Logged";
 import Unlogged from "./Unlogged";
 
-const Navbar = ({ firstName }) => {
-  const [isLogged, setIsLogged] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLogged(true);
-    }
-  }, []);
+const Navbar = () => {
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   return (
     <nav className="main-nav">
@@ -24,7 +18,7 @@ const Navbar = ({ firstName }) => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      {!isLogged ? <Unlogged /> : <Logged firstName={firstName} />}
+      {!isAuthenticated ? <Unlogged /> : <Logged />}
     </nav>
   );
 };

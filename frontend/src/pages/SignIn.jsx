@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../features/thunk";
 import Navbar from "../components/Navbar";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/v1/user/login",
-        { email, password }
-      );
-      console.log(response);
-      localStorage.setItem("token", response.data.body.token);
+
+    dispatch(userLogin({ email, password })).then(() => {
       navigate("/profile");
-    } catch (error) {
-      console.error(error);
-    }
+    });
   };
 
   return (

@@ -1,10 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { userLogout } from "../features/userSlice";
 
-const Logged = ({ firstName }) => {
+const Logged = () => {
+  const dispatch = useDispatch();
+  const { firstName } = useSelector((state) => state.user);
   let navigate = useNavigate();
+
   const logout = () => {
-    localStorage.removeItem("token");
+    dispatch(userLogout());
     navigate("/");
   };
   return (

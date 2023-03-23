@@ -1,39 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import dataAccount from "../data/dataAccount.json";
 import Account from "../components/Account";
 import Username from "../components/Username";
 import Navbar from "../components/Navbar";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { userProfile } from "../features/thunk";
 
 const Profile = () => {
-  const [lastName, setLastName] = useState("");
-  const [firstName, setFirstName] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:3001/api/v1/user/profile",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setLastName(response.data.body.lastName);
-        setFirstName(response.data.body.firstName);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchUserData();
-  }, []);
+    dispatch(userProfile());
+  }, [dispatch]);
   return (
     <>
-      <Navbar firstName={firstName} />
+      <Navbar />
       <main className="main bg-dark">
-        <Username firstName={firstName} lastName={lastName} />
+        <Username />
         <h2 className="sr-only">Accounts</h2>
         {dataAccount.map((item) => (
           <Account

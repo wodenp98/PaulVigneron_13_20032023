@@ -1,29 +1,39 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loginUser = createAsyncThunk(
+export const userLogin = createAsyncThunk(
   "user/login",
   async ({ email, password }) => {
-    const response = await axios.post(
-      "http://localhost:3001/api/v1/user/login",
-      { email, password }
-    );
-
-    const { firstName, lastName, token } = response.data;
-
-    localStorage.setItem("token", token);
-
-    return { firstName, lastName, token };
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/v1/user/login",
+        {
+          email,
+          password,
+        }
+      );
+      const token = response.data.body.token;
+      localStorage.setItem("token", token);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
-export const profileUser = createAsyncThunk(
-  "user/getProfile",
-  async ({ token }) => {
+export const userProfile = createAsyncThunk("user/getProfile", async () => {
+  try {
     const response = await axios.post(
       "http://localhost:3001/api/v1/user/profile",
-      { token }
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
-    return response.data;
+    return response.data.body;
+  } catch (error) {
+    console.log(error);
   }
-);
+});
