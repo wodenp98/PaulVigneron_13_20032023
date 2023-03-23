@@ -20,6 +20,10 @@ body {
   flex: 1;
 }
 
+.black {
+  color: black;
+}
+
 .bg-dark {
   background-color: #12002b;
 }

@@ -1,8 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userUpdate } from "../features/userSlice";
+import UpdateName from "./UpdateName";
 
 const Username = () => {
-  const { firstName, lastName } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { firstName, lastName, update } = useSelector((state) => state.user);
 
   return (
     <div className="header">
@@ -11,7 +14,18 @@ const Username = () => {
         <br />
         {firstName} {lastName}!
       </h1>
-      <button className="edit-button">Edit Name</button>
+      {update ? (
+        <UpdateName />
+      ) : (
+        <button
+          className="edit-button"
+          onClick={() => {
+            dispatch(userUpdate());
+          }}
+        >
+          Edit Name
+        </button>
+      )}
     </div>
   );
 };

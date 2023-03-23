@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../features/thunk";
@@ -6,13 +6,13 @@ import Navbar from "../components/Navbar";
 
 const SignIn = () => {
   const dispatch = useDispatch();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   let navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const formData = new FormData(event.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
 
     dispatch(userLogin({ email, password })).then(() => {
       navigate("/profile");
@@ -29,30 +29,20 @@ const SignIn = () => {
           <form onSubmit={handleSubmit}>
             <div className="input-wrapper">
               <label htmlFor="username">Username</label>
-              <input
-                type="email"
-                id="username"
-                name="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
+              <input type="email" id="username" name="email" />
             </div>
             <div className="input-wrapper">
               <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
+              <input type="password" id="password" name="password" />
             </div>
             <div className="input-remember">
               <input type="checkbox" id="remember-me" />
               <label htmlFor="remember-me">Remember me</label>
             </div>
 
-            <button className="sign-in-button">Sign In</button>
+            <button type="submit" className="sign-in-button">
+              Sign In
+            </button>
           </form>
         </section>
       </main>
