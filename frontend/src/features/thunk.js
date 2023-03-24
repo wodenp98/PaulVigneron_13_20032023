@@ -34,7 +34,7 @@ export const userProfile = createAsyncThunk("user/getProfile", async () => {
     );
     return response.data.body;
   } catch (error) {
-    return console.log(error);
+    throw new Error(error.response.data);
   }
 });
 
@@ -49,6 +49,27 @@ export const userUpdateProfile = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userCreate = createAsyncThunk(
+  "user/createUser",
+  async ({ email, password, firstName, lastName }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/v1/user/signup",
+        {
+          email,
+          password,
+          firstName,
+          lastName,
         }
       );
 

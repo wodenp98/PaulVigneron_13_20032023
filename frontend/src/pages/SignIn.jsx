@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../features/thunk";
 import Navbar from "../components/Navbar";
@@ -26,7 +26,7 @@ const SignIn = () => {
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
-          <form onSubmit={handleSubmit}>
+          <form className="form" onSubmit={handleSubmit}>
             <div className="input-wrapper">
               <label htmlFor="username">Username</label>
               <input type="email" id="username" name="email" />
@@ -44,6 +44,9 @@ const SignIn = () => {
               Sign In
             </button>
           </form>
+          <Link to="/signup" className="create-link">
+            Create Account ?
+          </Link>
         </section>
       </main>
     </>

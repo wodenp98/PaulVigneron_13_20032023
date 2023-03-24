@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userLogin, userProfile, userUpdateProfile } from "./thunk";
+import { userLogin, userProfile, userUpdateProfile, userCreate } from "./thunk";
 
 const initialState = {
   firstName: "",
@@ -72,6 +72,21 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(userUpdateProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(userCreate.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(userCreate.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.token = action.payload.token;
+        state.firstName = action.payload.firstName;
+        state.lastName = action.payload.lastName;
+      })
+      .addCase(userCreate.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
