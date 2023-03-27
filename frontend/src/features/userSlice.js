@@ -11,9 +11,6 @@ const initialState = {
   error: null,
 };
 
-// token?
-// true ou !state
-
 const userSlice = createSlice({
   name: "user",
   initialState,

@@ -49,7 +49,7 @@ paths:
       produces:
         - application/json
       responses:
-        "200":
+        "201":
           description: Signup Successfully
           schema:
             $ref: "#/definitions/ApiResponse"
@@ -159,7 +159,7 @@ paths:
       produces:
         - application/json
       responses:
-        "200":
+        "201":
           description: Transaction added successfully
           schema:
             $ref: "#/definitions/ApiResponseTransaction"
@@ -263,10 +263,8 @@ paths:
       produces:
         - application/json
       responses:
-        "200":
+        "204":
           description: Transaction deleted successfully
-          schema:
-            $ref: "#/definitions/ApiResponse"
         "401":
           description: Unauthorized access
         "500":
