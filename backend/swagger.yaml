@@ -1,9 +1,9 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: Bank Argent API documentation
   description: Contains all available API endpoints in this codebase
-  version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
 host: localhost:3001
 basePath: /api/v1
 schemes:
@@ -21,17 +21,17 @@ paths:
           description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/Login'
+            $ref: "#/definitions/Login"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Login Successfully
           schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
+            $ref: "#/definitions/LoginResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
   /user/signup:
     post:
@@ -45,17 +45,17 @@ paths:
           description: Signup Payload
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Signup Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
   /user/profile:
     post:
@@ -69,17 +69,18 @@ paths:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
+          type: string
           required: true
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
     put:
       security:
@@ -92,23 +93,183 @@ paths:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
+          type: string
           required: true
         - in: body
           name: body
           description: Update user profile attributes
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: "#/definitions/UserProfile"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
+          description: Internal Server Error
+  /user/transaction:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get all transactions for current month
+      description: API for getting all transactions for current month
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transactions retrieved successfully
+          schema:
+            $ref: "#/definitions/ApiResponseTransaction"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Add a new transaction
+      description: API for adding a new transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction Payload
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction added successfully
+          schema:
+            $ref: "#/definitions/ApiResponseTransaction"
+        "400":
+          description: Invalid Fields
+        "401":
+          description: Unauthorized access
+        "500":
+          description: Internal Server Error
+  /user/transaction/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get transaction details
+      description: API for getting transaction details
+      parameters:
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          type: string
+          required: true
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction details retrieved successfully
+          schema:
+            $ref: "#/definitions/Transaction"
+        "400":
+          description: Invalid Fields
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Update a transaction
+      description: API for updating a transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          type: string
+          required: true
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction Payload
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateTransaction"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction updated successfully
+          schema:
+            $ref: "#/definitions/ApiResponseTransaction"
+        "400":
+          description: Invalid Fields
+        "401":
+          description: Unauthorized access
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Delete a transaction
+      description: API for deleting a transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: transactionId
+          type: string
+          required: true
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction deleted successfully
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "401":
+          description: Unauthorized access
+        "500":
           description: Internal Server Error
 securityDefinitions:
   Bearer:
@@ -164,3 +325,41 @@ definitions:
         type: string
       lastName:
         type: string
+  ApiResponseTransaction:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: array
+        items:
+          $ref: "#/definitions/Transaction"
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        description: transaction id
+      date:
+        type: string
+        description: transaction date
+      description:
+        type: string
+        description: transaction description
+      amout:
+        type: integer
+        description: transaction amount
+      balance:
+        type: integer
+        description: transaction balance
+  UpdateTransaction:
+    type: object
+    properties:
+      description:
+        type: string
+        description: transaction description
+      amout:
+        type: integer
+        description: transaction amount
