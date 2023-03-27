@@ -31,6 +31,9 @@ mongo --version
 1. Run the following commands:
 
 ```bash
+# Change directory
+cd backend
+
 # Install dependencies
 npm install
 
@@ -65,21 +68,24 @@ Once you run the `populate-db` script, you should have two users in your databas
 
 To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3001/api-docs
 
-
 ## 2. Frontend
 
 Change directory:
+
 ```
 - cd frontend
 ```
-Install dependecies: 
+
+Install dependecies:
+
 ```
 - npm install
 ```
+
 Run backend:
+
 ```
 - npm start
 ```
 
-
-The frontend is now avaible on http://localhost:3000 
+The frontend is now avaible on http://localhost:3000
