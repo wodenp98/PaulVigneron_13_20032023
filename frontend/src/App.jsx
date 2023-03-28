@@ -7,9 +7,6 @@ import Footer from "./components/Footer";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import "./main.css";
 
-// signup avec link to signup dans sign in et new route new page
-// pour le form modal ou page?
-
 function App() {
   return (
     <div className="App">
