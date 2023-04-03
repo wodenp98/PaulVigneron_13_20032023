@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userProfile, userUpdateProfile } from "../features/thunk";
 import { userUpdate } from "../features/userSlice";
 
@@ -21,13 +21,12 @@ const UpdateName = () => {
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper black">
           <label htmlFor="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" />
+          <input type="text" id="firstName" name="firstName" required />
         </div>
         <div className="input-wrapper black">
           <label htmlFor="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" />
+          <input type="text" id="lastName" name="lastName" required />
         </div>
-
         <button type="submit" className="sign-in-button">
           Update
         </button>
